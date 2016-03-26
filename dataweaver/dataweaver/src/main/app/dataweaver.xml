@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8081" basePath="/welcome" doc:name="HTTP Listener Configuration"/>
+    <flow name="dataweaverFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/" metadata:id="1a6a6a64-9e9f-41b3-b6e0-bdf9ec750740" doc:name="HTTP"/>
+        <logger message="......... The Flow has been called here ........." level="INFO" doc:name="Logger"/>
+        <logger message="Received Payload = #[message.payload]" level="INFO" doc:name="Logger"/>
+        <set-variable variableName="result" value="Hallo #[message.payload]" doc:name="Variable"/>
+        <set-payload value="#[flowVars.result]" doc:name="Set Payload"/>
+    </flow>
+</mule>
